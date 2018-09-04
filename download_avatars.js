@@ -12,6 +12,11 @@ function getRepoContributors(repoOwner, repoName, cb) {
       'Authorization' : process.env.token
     }
   };
+  fs.access('./avatars', function(err) {
+    if (err && err.code === 'ENOENT') {
+      fs.mkdir('./avatars');
+    }
+  });
   request(options, function(err, res, body) {
     cb(err, JSON.parse(body));
   });
